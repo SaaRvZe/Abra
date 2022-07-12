@@ -1,0 +1,4 @@
+<div class="favorites-container">
+  <app-favorite-weather-card *ngFor="let fav of favorites | keyvalue"
+                             [city]="fav.value"></app-favorite-weather-card>
+</div>

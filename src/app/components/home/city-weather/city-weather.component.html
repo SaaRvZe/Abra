@@ -1,0 +1,41 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar class="header-image"></div>
+    <mat-card-title>{{city?.LocalizedName}}</mat-card-title>
+    <mat-card-subtitle>38C</mat-card-subtitle>
+    <span class="fill-space"></span>
+    <mat-card-actions align="start">
+      <mat-icon class="pointer" *ngIf="!city?.isFavorite" (click)="toggleFavorites(city)">favorite_outline</mat-icon>
+      <mat-icon class="pointer" *ngIf="city?.isFavorite" (click)="toggleFavorites(city)">favorite</mat-icon>
+    </mat-card-actions>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="weather">
+      <h1>{{weatherForecast.Headline.Text}}</h1>
+
+      <div class="weather-days-container">
+        <mat-card *ngFor="let day of weatherForecast.DailyForecasts" class="weather-day">
+          <mat-card-header>
+            <object mat-card-avatar type="image/svg+xml" class="weather-icon"
+                    [data]="day.iconLink"></object>
+            <mat-card-title class="day">{{day.Date | date: 'EE dd/MM'}}</mat-card-title>
+            <mat-card-subtitle class="degrees">
+              <span class="highest">{{day.Temperature.Maximum.Value}}&#176;</span>
+              <span class="lowest">/{{day.Temperature.Minimum.Value}}&#176;</span>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+            {{day.Day.LongPhrase}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+    </div>
+  </mat-card-content>
+</mat-card>

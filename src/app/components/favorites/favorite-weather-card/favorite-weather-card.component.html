@@ -1,0 +1,20 @@
+<mat-card *ngFor="let weather of weather$ | async" class="weather-day">
+  <mat-card-header>
+    <object mat-card-avatar type="image/svg+xml" class="weather-icon"
+            [data]="weather.iconLink"></object>
+    <mat-card-title class="day">{{weather.Date | date: 'EE'}} {{city.LocalizedName}}</mat-card-title>
+    <mat-card-subtitle class="degrees">
+      <span class="highest">{{weather.Temperature.Metric.Value}}&#176;</span>
+    </mat-card-subtitle>
+    <span class="fill-space"></span>
+    <mat-card-actions align="start">
+      <mat-icon class="pointer rainbow" (click)="removeFavorites(city)">favorite</mat-icon>
+    </mat-card-actions>
+  </mat-card-header>
+  <mat-card-content>
+    <h1>
+      {{weather.WeatherText}}
+    </h1>
+  </mat-card-content>
+</mat-card>
+
