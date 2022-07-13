@@ -14,6 +14,7 @@ import {
 } from "../components/favorites/favorite-weather-card/favorite-weather-card.component";
 import {MatButtonModule} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 
@@ -34,6 +35,7 @@ import {HttpClientModule} from "@angular/common/http";
     MatIconModule,
     MatButtonModule,
     HttpClientModule,
+    MatProgressSpinnerModule,
   ]
 })
 export class WeatherModule { }
