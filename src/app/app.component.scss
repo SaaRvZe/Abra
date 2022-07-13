@@ -4,8 +4,8 @@
   a {
     padding: 8px;
 
-    &.active {
-
+    &.active, &:hover {
+      background: rgba(0, 0, 0, 0.1);
     }
 
     &:visited {
@@ -14,10 +14,13 @@
   }
 }
 
+
+
 .router-container {
   --padding: 10px;
   padding: var(--padding);
   height: calc(100% - var(--toolbar-height) - (var(--padding) * 2));
 }
+
 
 

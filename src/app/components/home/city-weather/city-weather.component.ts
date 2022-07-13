@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {WeatherForecast} from "../../../model/weather-forecast";
+import {City, WeatherForecast} from "../../../model/weather-forecast";
 import {WeatherService} from "../../../services/weather.service";
+import {map, Observable} from "rxjs";
 
 @Component({
   selector: 'app-city-weather',
@@ -9,21 +10,23 @@ import {WeatherService} from "../../../services/weather.service";
 })
 export class CityWeatherComponent implements OnInit {
   @Input() weatherForecast: WeatherForecast;
-  @Input() city: any;
+  @Input() city: City;
+  isFavorite$: Observable<{ isFav: boolean }>;
   constructor(private weatherService: WeatherService) {
   }
 
   ngOnInit(): void {
+    this.isFavorite$ = this.weatherService.getFavorites().pipe(map(favorites => {
+      return {isFav: !!favorites[this.city.Key]};
+    }))
   }
 
-  //TODO create state management and a class/interface for city
-  toggleFavorites(city: any) {
-    if(this.city?.isFavorite) {
-      this.weatherService.removeFavorites(city);
-    } else {
-      this.weatherService.addFavorites(city);
-    }
-    this.city.isFavorite = !this.city?.isFavorite;
+  addFavorites(city: City) {
+    this.weatherService.addFavorites(city);
+  }
+
+  removeFavorites(city: City) {
+    this.weatherService.removeFavorites(city);
   }
 
 }

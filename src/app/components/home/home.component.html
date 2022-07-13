@@ -1,5 +1,4 @@
 <div class="container">
-
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Search City</mat-label>
       <input type="text"
@@ -18,7 +17,11 @@
       </mat-autocomplete>
     </mat-form-field>
 
-<ng-container *ngIf="weatherForecast$ | async as weatherForecast">
+<ng-container *ngIf="weatherForecast$ | async as weatherForecast; else loader">
   <app-city-weather [city]="selectedCity" [weatherForecast]="weatherForecast"></app-city-weather>
 </ng-container>
 </div>
+
+<ng-template #loader>
+  <mat-spinner></mat-spinner>
+</ng-template>

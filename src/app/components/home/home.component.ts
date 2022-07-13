@@ -2,9 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {debounceTime, Observable, Subject, switchMap, takeUntil} from "rxjs";
 import {WeatherService} from "../../services/weather.service";
-import { WeatherForecast} from "../../model/weather-forecast";
-import {Store} from "@ngrx/store";
+import {City, WeatherForecast} from "../../model/weather-forecast";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -16,22 +16,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   autoCompleteControl = new FormControl('');
   filteredOptions$!: Observable<any>;
   weatherForecast$: Observable<WeatherForecast>;
-  selectedCity: any;
+  selectedCity: City;
 
-  constructor(private weatherService: WeatherService, private store: Store<{ count: number }>) {
-
+  constructor(private weatherService: WeatherService, private route: ActivatedRoute) {
   }
   ngOnInit() {
-    this.filteredOptions$ = this.autoCompleteControl.valueChanges
-      .pipe(takeUntil(this._destroy$),debounceTime(400),
-        switchMap(value => this.weatherService.getAutoComplete(value)));
-
-    this.weatherForecast$ = this.weatherService.get5DaysWeather('215854');
-
-    this.weatherService.getLocationDetails('215854').subscribe(city => {
-      city.isFavorite = this.weatherService.isFavorite(city);
-      this.selectedCity = city;
-    })
+    this.initListeners();
   }
 
   ngOnDestroy() {
@@ -39,14 +29,29 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  displayCityName(city: any): string {
+  initListeners() {
+    this.route.params.pipe(takeUntil(this._destroy$)).pipe(switchMap(params => {
+      const cityKey = params['cityKey'] ?? '215854';
+      return this.weatherService.getLocationDetails(cityKey);
+    })).subscribe(city => {
+        // city.IsFavorite = this.weatherService.isFavorite(city);
+        this.selectedCity = city;
+      this.weatherForecast$ = this.weatherService.get5DaysWeather(city?.Key);
+    });
+
+    this.filteredOptions$ = this.autoCompleteControl.valueChanges
+      .pipe(takeUntil(this._destroy$),debounceTime(400),
+        switchMap(value => this.weatherService.getAutoComplete(value)));
+  }
+
+  displayCityName(city: City): string {
     return city && city.LocalizedName ? city.LocalizedName : '';
   }
 
   citySelected($event: MatAutocompleteSelectedEvent) {
     const value = $event.option.value;
     this.selectedCity = value;
-    this.selectedCity.isFavorite = this.weatherService.isFavorite(this.selectedCity);
+    this.selectedCity.IsFavorite = this.weatherService.isFavorite(this.selectedCity);
     this.weatherForecast$ = this.weatherService.get5DaysWeather(value.Key);
   }
 }

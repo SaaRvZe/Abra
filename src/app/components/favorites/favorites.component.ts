@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {WeatherService} from "../../services/weather.service";
+import {ReadOnlyDictionary} from "../../state/readonly-dictionary";
+import {City} from "../../model/weather-forecast";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-favorites',
@@ -7,9 +10,9 @@ import {WeatherService} from "../../services/weather.service";
   styleUrls: ['./favorites.component.scss']
 })
 export class FavoritesComponent implements OnInit {
-  favorites: {}
+  favorites$: Observable<ReadOnlyDictionary<City>>;
   constructor(private weatherService: WeatherService ){
-    this.favorites = weatherService.getFavorites();
+    this.favorites$ = weatherService.getFavorites();
   }
 
   ngOnInit(): void {

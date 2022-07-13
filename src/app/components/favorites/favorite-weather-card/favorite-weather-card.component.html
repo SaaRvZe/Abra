@@ -1,20 +1,30 @@
-<mat-card *ngFor="let weather of weather$ | async" class="weather-day">
+<mat-card *ngIf="weather$ | async as weather; else loader" class="weather-day">
   <mat-card-header>
     <object mat-card-avatar type="image/svg+xml" class="weather-icon"
-            [data]="weather.iconLink"></object>
+            [data]="weather.IconLink"></object>
     <mat-card-title class="day">{{weather.Date | date: 'EE'}} {{city.LocalizedName}}</mat-card-title>
     <mat-card-subtitle class="degrees">
       <span class="highest">{{weather.Temperature.Metric.Value}}&#176;</span>
     </mat-card-subtitle>
     <span class="fill-space"></span>
     <mat-card-actions align="start">
-      <mat-icon class="pointer rainbow" (click)="removeFavorites(city)">favorite</mat-icon>
+      <mat-icon class="pointer rainbow"  matTooltip="Remove from favorites"
+                (click)="removeFavorites(city)">favorite</mat-icon>
     </mat-card-actions>
   </mat-card-header>
   <mat-card-content>
-    <h1>
+    <p class="weather-text">
       {{weather.WeatherText}}
-    </h1>
+    </p>
   </mat-card-content>
+<!--  <br>-->
+<!--  <br>-->
+  <mat-card-actions>
+    <mat-divider></mat-divider>
+    <button mat-button [routerLink]="['/home', city.Key]">See Weekly Weather</button>
+  </mat-card-actions>
 </mat-card>
 
+<ng-template #loader>
+  <mat-spinner></mat-spinner>
+</ng-template>

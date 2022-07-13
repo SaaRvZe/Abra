@@ -1,7 +1,7 @@
-.header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
-}
+//.header-image {
+//  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+//  background-size: cover;
+//}
 
 .weather-days-container {
   display: flex;
@@ -9,10 +9,14 @@
   gap: 20px;
 }
 
+.weather {
+  text-align: center;
+}
+
 .weather-day {
   //border: 1px black solid;
-  width: 200px;
-  height: 200px;
+  width: 120px;
+  height: 120px;
   padding: 10px;
 
   .weather-icon {
@@ -27,3 +31,17 @@
   }
 }
 
+@media only screen and (max-width: 480px) {
+ .mat-card-header {
+   justify-content: space-evenly;
+ }
+  .weather-days-container {
+   flex-direction: column;
+   align-items: center;
+
+   .weather-day {
+     height: 50px;
+     width: 200px;
+   }
+ }
+}

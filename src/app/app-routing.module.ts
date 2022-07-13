@@ -4,6 +4,7 @@ import {HomeComponent} from "./components/home/home.component";
 import {FavoritesComponent} from "./components/favorites/favorites.component";
 
 const routes: Routes = [
+  { path: 'home/:cityKey', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'favorites', component: FavoritesComponent },
   { path: '**', redirectTo: 'home'}

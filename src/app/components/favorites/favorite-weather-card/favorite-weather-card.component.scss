@@ -4,7 +4,24 @@
   height: 200px;
   padding: 10px;
 
+  .weather-text {
+    font-size: 18px;
+  }
   .weather-icon {
     width: 30px ;
   }
+}
+
+.mat-card{
+  display:flex;
+  flex-direction: column;
+}
+
+.mat-card-header {
+  flex-shrink: 0;
+}
+
+.mat-card-content{
+  flex-grow: 1;
+  overflow: auto;
 }

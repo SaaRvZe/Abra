@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {WeatherService} from "../../../services/weather.service";
-import {Observable, tap} from "rxjs";
+import {map, Observable} from "rxjs";
+import {City, CurrentWeather} from "../../../model/weather-forecast";
 
 @Component({
   selector: 'app-favorite-weather-card',
@@ -8,15 +9,15 @@ import {Observable, tap} from "rxjs";
   styleUrls: ['./favorite-weather-card.component.scss']
 })
 export class FavoriteWeatherCardComponent implements OnInit {
-  @Input() city: any;
-  weather$: Observable<any>;
+  @Input() city: City;
+  weather$: Observable<CurrentWeather>;
   constructor(private weatherService: WeatherService) { }
 
   ngOnInit(): void {
-    this.weather$ = this.weatherService.getCurrentWeather(this.city?.Key).pipe(tap(data => console.log('current',data)))
+    this.weather$ = this.weatherService.getCurrentWeather(this.city?.Key).pipe(map(weather => weather[0]));
   }
 
-  removeFavorites(city: any) {
+  removeFavorites(city: City) {
       this.weatherService.removeFavorites(city);
   }
 }
