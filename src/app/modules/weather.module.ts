@@ -15,6 +15,9 @@ import {
 import {MatButtonModule} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {RouterModule} from "@angular/router";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 
@@ -36,6 +39,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatButtonModule,
     HttpClientModule,
     MatProgressSpinnerModule,
+    RouterModule,
+    MatDividerModule,
+    MatSnackBarModule,
   ]
 })
 export class WeatherModule { }
