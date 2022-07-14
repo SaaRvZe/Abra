@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   accuweatherHost: 'https://dataservice.accuweather.com',
-  accuweatherApiKey: 'VfSGJMK0xd7sPNooRzvnZmNHcBqnJJGX',
+  accuweatherApiKey: 'r2E8wvmsAjyEbf8GtDNEX37AGAxa2mKa',
 };
